@@ -1,4 +1,4 @@
-# Manual do Usuário do Programmable Matter Simulator
+# Manual do Usuário do DeclaSim
 
 Versão v1.0 (TCC III)
 
@@ -1162,7 +1162,7 @@ para a direita até a borda da grade e fica laranja, e uma partícula cinza (`Ma
 para marcar o fim do caminho. Os arquivos estão na pasta `exemplos` do pacote do simulador e em
 [`docs/exemplos`](exemplos).
 
-**Passo 1: abrir o simulador.** Abra `Programmable Matter Simulator.exe`. A tela tem:
+**Passo 1: abrir o simulador.** Abra `DeclaSim.exe`. A tela tem:
 
 - ao centro, a vista 3D da grade;
 - no alto, ao centro, uma barra flutuante com os botões de controle;

@@ -21,10 +21,10 @@ tempo), que podem ser exportados para uma planilha.
 
 ## Como baixar e executar
 
-1. Abra a página de [versões publicadas](https://github.com/Loukanos/Programmable-Matter-Simulator/releases)
+1. Abra a página de [versões publicadas](https://github.com/Loukanos/DeclaSim/releases)
    deste repositório e baixe o pacote da versão **v1.0 (TCC III)**.
 2. Extraia o arquivo `.zip` para uma pasta do seu computador.
-3. Dentro da pasta extraída, abra `Programmable Matter Simulator.exe`.
+3. Dentro da pasta extraída, abra `DeclaSim.exe`.
 
 O pacote também traz a pasta `exemplos`, com os mesmos arquivos de
 [`docs/exemplos`](docs/exemplos) deste repositório.
