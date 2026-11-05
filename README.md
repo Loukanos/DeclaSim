@@ -1,6 +1,8 @@
-# Programmable Matter Simulator
+# DeclaSim
 
-Simulador de matéria programável: um conjunto de partículas (cubos) ocupa uma grade
+Simulador tridimensional de matéria programável baseado em regras declarativas.
+
+Um conjunto de partículas (cubos) ocupa uma grade
 tridimensional e, a cada ciclo, cada partícula decide o que fazer seguindo regras escritas por
 você. As partículas podem se mover uma célula por vez, guardar valores, mudar de cor e trocar
 mensagens com as vizinhas. Todas agem ao mesmo tempo, como numa animação quadro a quadro, e o
@@ -8,7 +10,7 @@ simulador resolve sozinho os conflitos quando duas querem ocupar a mesma célula
 
 Você descreve o experimento em dois arquivos de texto no formato JSON: o **arquivo de cenário**
 (tamanho da grade e posição inicial de cada partícula) e o **arquivo de comportamento** (as regras
-de cada tipo de partícula). Não é preciso saber Unity nem C#. Durante a execução, o simulador
+de cada tipo de partícula). Não é preciso saber Unity nem C#, apenas aprender a sintaxe das regras. Durante a execução, o simulador
 mostra a simulação em 3D e um painel de indicadores (movimentos, colisões, mensagens, ciclos,
 tempo), que podem ser exportados para uma planilha.
 
