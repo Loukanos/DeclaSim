@@ -139,7 +139,9 @@ Para reagir a mensagens, use o evento `onMessage` ou a condição `checkMessage`
 - Se a célula pedida está ocupada por uma partícula que **não vai sair** (porque ficou parada ou
   porque também foi bloqueada), o movimento é bloqueado e conta uma colisão.
 - Se a célula está ocupada por uma partícula que **sai no mesmo ciclo**, o movimento acontece, como
-  numa fila que anda. Duas vizinhas que se movem uma para a célula da outra trocam de lugar.
+  numa fila que anda.
+- Se **duas vizinhas** tentam trocar de lugar no mesmo ciclo, **nenhuma** se move e cada uma conta
+  uma colisão.
 - Um movimento para **fora da grade**, ou com uma direção que não existe (lida de uma variável), é
   um **movimento inválido**: a partícula fica onde está.
 
@@ -332,12 +334,19 @@ mensagens que vieram do lado `DIR` (o lado onde a remetente estava). Dentro dess
 A condição de uma regra é um texto que resulta em verdadeiro ou falso. As condições abaixo podem
 ser combinadas com `And`, `Or` e `Not` (veja a [seção 2.5](#25-operadores-lógicos)).
 
-#### hasNeighbor(dir)
+#### hasNeighbor(dir) e hasNeighbor()
 
-Verdadeira se a célula vizinha na direção `dir` está ocupada.
+`hasNeighbor(dir)` é verdadeira se a célula vizinha na direção `dir` está ocupada.
 
 ```json
 { "condition": "hasNeighbor('Y-')", "actions": ["setColor('#FF6600')"] }
+```
+
+`hasNeighbor()`, sem direção, é verdadeira se pelo menos uma das seis faces tem vizinha encostada.
+Vizinhas na diagonal não contam.
+
+```json
+{ "condition": "Not hasNeighbor()", "actions": ["setColor('#999999')"] }
 ```
 
 #### canMove(dir)
@@ -565,12 +574,12 @@ Quantas das seis faces têm vizinha encostada, de 0 a 6.
 { "condition": "hasNeighbor('Y-')", "actions": ["setState('vizinhas', countNeighbors())"] }
 ```
 
-#### canMove(dir) e hasNeighbor(dir) como valor
+#### canMove(dir), hasNeighbor(dir) e hasNeighbor() como valor
 
 Produzem verdadeiro ou falso, exatamente como as condições de mesmo nome.
 
 ```json
-{ "actions": ["setState('livreAcima', canMove('Y+'))", "setState('apoiada', hasNeighbor('Y-'))"] }
+{ "actions": ["setState('livreAcima', canMove('Y+'))", "setState('apoiada', hasNeighbor('Y-'))", "setState('encostada', hasNeighbor())"] }
 ```
 
 #### checkMessage(etiqueta) como valor
@@ -1332,7 +1341,7 @@ selecionado, elas alteram o valor dele.
 |---|---|
 | Partículas | Número de partículas do cenário carregado. |
 | Movimentos | Total de movimentos realizados (uma partícula que andou uma célula num ciclo conta 1). Movimentos bloqueados ou inválidos não contam. |
-| Colisões | Quantas vezes uma partícula tentou se mover e foi bloqueada (veja a [seção 1.6](#16-colisões-e-movimentos-inválidos)). Três partículas disputando a mesma célula contam 3. |
+| Colisões | Quantas vezes uma partícula tentou se mover e foi bloqueada (veja a [seção 1.6](#16-colisões-e-movimentos-inválidos)). Três partículas disputando a mesma célula contam 3; duas que tentam trocar de lugar contam 2. |
 | Movimentos inválidos | Tentativas de sair da grade ou de mover numa direção inexistente. |
 | FPS | Quadros desenhados por segundo neste momento. Continua sendo atualizado com a simulação pausada. |
 | FPS médio | Quadros desenhados com a simulação rodando, divididos pelo "Tempo decorrido". Mostra um traço (—) antes de iniciar e fica congelado depois do encerramento. |
