@@ -59,6 +59,7 @@ namespace ParticleSim.SimulationEngine
         // An unresolved direction means no neighbor; passing null to HasNeighbor would check all six faces instead.
         public static bool EvaluateHasNeighbor(ValueNode[] args, EvaluationContext ctx)
         {
+            if (args.Length == 0) return HasNeighbor(ctx.Particle, ctx.Grid);
             string direction = ValueResolver.ResolveDirection(args[0], ctx);
             return direction != null && HasNeighbor(ctx.Particle, ctx.Grid, direction);
         }

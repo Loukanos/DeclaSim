@@ -94,7 +94,8 @@ namespace ParticleSim.InputValidation
                 functions[name] = new FunctionSignature { Name = name, Role = role, Overloads = overloads };
 
             Add(LanguageVocabulary.HasNeighbor, FunctionRole.Condition | FunctionRole.Value,
-                new[] { ArgumentKind.Direction });
+                new[] { ArgumentKind.Direction },
+                Array.Empty<ArgumentKind>());
             Add(LanguageVocabulary.CheckState, FunctionRole.Condition,
                 new[] { ArgumentKind.StateKey, ArgumentKind.RelationalOperator, ArgumentKind.Value });
             Add(LanguageVocabulary.CheckMessage, FunctionRole.Condition | FunctionRole.Value,

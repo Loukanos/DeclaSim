@@ -391,6 +391,18 @@ namespace ParticleSim.SimulationEngine
                 if (willMove[p] && requestCount[desiredPositions[p]] > 1)
                     willMove[p] = false;
 
+            // The loop below can't catch a head-on swap: each occupant is leaving, so both would pass through each other.
+            foreach (Particle p in _particleManager.Particles)
+            {
+                if (!willMove[p]) continue;
+                if (_particleManager.TryGetParticleAt(desiredPositions[p], out Particle other)
+                    && willMove[other] && desiredPositions[other] == p.GridPosition)
+                {
+                    willMove[p] = false;
+                    willMove[other] = false;
+                }
+            }
+
             bool changed;
             do
             {
