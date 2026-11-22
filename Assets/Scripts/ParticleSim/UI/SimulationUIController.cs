@@ -37,6 +37,13 @@ namespace ParticleSim.UI
 
         [SerializeField] private SimulationController simulation;
 
+        [Tooltip("How the UI follows the screen size around the panel's reference resolution: 1 scales it in proportion to the screen, 0 keeps a constant pixel size, values in between shrink it less on small screens. Applied live.")]
+        [Range(0f, 1f)]
+        [SerializeField] private float uiScaleExponent = 0.3f;
+
+        private PanelSettings _panelSettings;
+        private float _originalPanelScale;
+
         private Button _runButton;
         private Button _pauseButton;
         private Button _stopButton;
@@ -116,6 +123,9 @@ namespace ParticleSim.UI
 
         private void OnEnable()
         {
+            _panelSettings = GetComponent<UIDocument>().panelSettings;
+            if (_panelSettings != null) _originalPanelScale = _panelSettings.scale;
+
             if (simulation == null)
             {
                 Debug.LogError($"[{nameof(SimulationUIController)}] No {nameof(SimulationController)} in the scene. UI disabled.", this);
@@ -155,6 +165,9 @@ namespace ParticleSim.UI
 
         private void OnDisable()
         {
+            // PanelSettings is an asset: without this, the scale set in Play Mode would stay in the Editor afterwards.
+            if (_panelSettings != null) _panelSettings.scale = _originalPanelScale;
+
             if (!_bound) return;
 
             _runButton.clicked -= OnRun;
@@ -489,11 +502,35 @@ namespace ParticleSim.UI
 
         private void Update()
         {
+            ApplyPanelScale();
+
             _statsTimer += Time.unscaledDeltaTime;
             if (_statsTimer < StatsRefreshInterval) return;
 
             _statsTimer = 0f;
             UpdateStats();
+        }
+
+        private void ApplyPanelScale()
+        {
+            if (_panelSettings == null || _panelSettings.scaleMode != PanelScaleMode.ScaleWithScreenSize) return;
+
+            Vector2Int reference = _panelSettings.referenceResolution;
+            if (reference.x <= 0 || reference.y <= 0) return;
+
+            float widthRatio = (float)Screen.width / reference.x;
+            float heightRatio = (float)Screen.height / reference.y;
+            float linear = _panelSettings.screenMatchMode switch
+            {
+                PanelScreenMatchMode.Expand => Mathf.Min(widthRatio, heightRatio),
+                PanelScreenMatchMode.Shrink => Mathf.Max(widthRatio, heightRatio),
+                _ => Mathf.Lerp(widthRatio, heightRatio, _panelSettings.match),
+            };
+            if (linear <= 0f) return;
+
+            // Unity already multiplies by linear; this extra factor turns the result into linear^uiScaleExponent.
+            float scale = _originalPanelScale * Mathf.Pow(linear, uiScaleExponent - 1f);
+            if (!Mathf.Approximately(_panelSettings.scale, scale)) _panelSettings.scale = scale;
         }
 
         private void UpdateStats()
