@@ -1,6 +1,6 @@
 # Manual do Usuário do DeclaSim
 
-Versão v1.0 (TCC III)
+v1.0.0
 
 Este manual ensina a criar os dois arquivos que o simulador lê (o arquivo de comportamento e o
 arquivo de cenário) e a usar a interface para rodar e analisar uma simulação. Não é preciso saber
@@ -1168,8 +1168,7 @@ As mensagens de erro correspondentes estão na [seção 2.12](#212-mensagens-de-
 
 Este tutorial usa o [exemplo 1](#51-exemplo-1-até-a-borda): uma partícula azul (`Andarilho`) anda
 para a direita até a borda da grade e fica laranja, e uma partícula cinza (`Marco`) fica parada
-para marcar o fim do caminho. Os arquivos estão na pasta `exemplos` do pacote do simulador e em
-[`docs/exemplos`](exemplos).
+para marcar o fim do caminho. Os arquivos estão em [`docs/exemplos`](exemplos).
 
 **Passo 1: abrir o simulador.** Abra `DeclaSim.exe`. A tela tem:
 
@@ -1408,8 +1407,7 @@ longos podem parecer cortados. Os valores estão completos; basta alargar as col
 
 ## 5. Exemplos completos
 
-Os arquivos destes exemplos estão em [`docs/exemplos`](exemplos) e na pasta `exemplos` do pacote
-do simulador. Para rodar cada um, siga o [passo a passo da seção 4.1](#41-passo-a-passo-com-o-exemplo-1)
+Os arquivos destes exemplos estão em [`docs/exemplos`](exemplos). Para rodar cada um, siga o [passo a passo da seção 4.1](#41-passo-a-passo-com-o-exemplo-1)
 trocando os nomes dos arquivos.
 
 ### 5.1 Exemplo 1: até a borda
